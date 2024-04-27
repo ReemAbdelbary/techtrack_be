@@ -7,7 +7,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const app = express();
 const cors = require("cors");
-
+// adding cors
 app.use(cors());
 
 const globalErrorHandler = require("./controllers/errorController");
