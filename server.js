@@ -7,7 +7,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const port = process.env.PORT || 3000;
+let port;
 const app = require("./app");
 
 dotenv.config({ path: "./config.env" });

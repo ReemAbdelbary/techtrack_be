@@ -25,7 +25,7 @@ const createSendToken = (user, statusCode, res) => {
 
   res.cookie("jwt", token, cookieOptions);
 
-  res.status(statusCode).json({
+  return res.status(statusCode).json({
     status: "success",
     token,
     data: {
@@ -64,7 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   const token = signToken(user._id);
-  res.status(200).json({
+  return res.status(200).json({
     status: "success",
     token,
   });
@@ -146,7 +146,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     await sendEmail(req.body.email, "Password Reset", message);
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "token sent to email",
     });
@@ -223,9 +223,9 @@ exports.getCurrentUser = catchAsync(async (req, res, next) => {
   next();
 });
 
-//foe sign up : name 
-// gender 
-// country 
+//foe sign up : name
+// gender
+// country
 // email
 // password
 // confirm password

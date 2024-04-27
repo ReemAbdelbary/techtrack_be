@@ -9,7 +9,7 @@ exports.getallLaptops = catchAsync(async (req, res, next) => {
     const laptopsResults = await Product.find({ category: "Laptops" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: laptopsResults.length,
       data: {
@@ -18,7 +18,7 @@ exports.getallLaptops = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching laptops:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -28,7 +28,7 @@ exports.getallMobiles = catchAsync(async (req, res, next) => {
     const mobilesResults = await Product.find({ category: "Mobiles" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: mobilesResults.length,
       data: {
@@ -37,7 +37,7 @@ exports.getallMobiles = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching mobiles:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -47,7 +47,7 @@ exports.getallAcces = catchAsync(async (req, res, next) => {
     const accResults = await Product.find({ category: "Accessories" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: accResults.length,
       data: {
@@ -56,7 +56,7 @@ exports.getallAcces = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching accessories:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -66,7 +66,7 @@ exports.getTopRated = catchAsync(async (req, res, next) => {
       .sort({ Rate_Avg: -1 }) // Sort by Rate_Avg in descending order (highest to lowest)
       .limit(4);
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: topRatedProducts.length,
       data: {
@@ -75,7 +75,7 @@ exports.getTopRated = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error fetching top rated products:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -85,7 +85,7 @@ exports.getallRaya = catchAsync(async (req, res, next) => {
     const rayaResults = await Product.find({ site: "Raya" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: rayaResults.length,
       data: {
@@ -94,7 +94,7 @@ exports.getallRaya = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Raya site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -104,7 +104,7 @@ exports.getallNoon = catchAsync(async (req, res, next) => {
     const noonResults = await Product.find({ site: "Noon" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: noonResults.length,
       data: {
@@ -113,7 +113,7 @@ exports.getallNoon = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Noon site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -123,7 +123,7 @@ exports.getallAmazon = catchAsync(async (req, res, next) => {
     const amazonResults = await Product.find({ site: "amazon" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: amazonResults.length,
       data: {
@@ -132,7 +132,7 @@ exports.getallAmazon = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Amazon site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -142,7 +142,7 @@ exports.getallBtech = catchAsync(async (req, res, next) => {
     const btechResults = await Product.find({ site: "BTECH" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: btechResults.length,
       data: {
@@ -151,7 +151,7 @@ exports.getallBtech = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Btech site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -161,7 +161,7 @@ exports.getallKimo = catchAsync(async (req, res, next) => {
     const kimoResults = await Product.find({ site: "Kimo Store" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: kimoResults.length,
       data: {
@@ -170,7 +170,7 @@ exports.getallKimo = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Kimo store site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -180,7 +180,7 @@ exports.getallTwoB = catchAsync(async (req, res, next) => {
     const twoBResults = await Product.find({ site: "2b" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: twoBResults.length,
       data: {
@@ -189,7 +189,7 @@ exports.getallTwoB = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching 2b site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -199,7 +199,7 @@ exports.getallDream = catchAsync(async (req, res, next) => {
     const dreamResults = await Product.find({ site: "dream2000" });
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: dreamResults.length,
       data: {
@@ -208,6 +208,6 @@ exports.getallDream = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching Dream 2000 site:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });

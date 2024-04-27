@@ -10,7 +10,7 @@ exports.deleteOne = (Model) =>
       return next(new AppError("NO Document found with this id", 404));
     }
 
-    res.status(204).json({
+    return res.status(204).json({
       status: "success",
       data: null,
     });
@@ -26,7 +26,7 @@ exports.updateOne = (Model) =>
     if (!doc) {
       return next(new AppError("NO Document found with this id", 404));
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {
         data: doc,
@@ -38,7 +38,7 @@ exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       data: {
         data: doc,
@@ -56,7 +56,7 @@ exports.getOne = (Model, popOptions) =>
       return next(new AppError("No document found with that ID", 404));
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {
         data: doc,
@@ -78,7 +78,7 @@ exports.getAll = (Model) =>
     const doc = await features.query;
 
     // SEND RESPONSE
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: doc.length,
       data: {

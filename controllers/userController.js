@@ -31,7 +31,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
-  res.status(200).json({
+  return res.status(200).json({
     status: "success",
     data: {
       user: updatedUser,
@@ -43,7 +43,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
-  res.status(204).json({
+  return res.status(204).json({
     status: "success",
     data: null,
   });
@@ -55,7 +55,7 @@ exports.getuser = catchAsync(async (req, res, next) => {
   if (!doc) {
     return next(new AppError("No document found with that ID", 404));
   }
-  res.status(200).json({
+  return res.status(200).json({
     status: "success",
     data: {
       data: doc,

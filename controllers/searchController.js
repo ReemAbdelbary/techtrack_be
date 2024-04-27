@@ -44,7 +44,7 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
       .limit(limit);
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: searchResults.length,
       data: {
@@ -53,7 +53,7 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching products:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -72,7 +72,7 @@ exports.getAllSearchResults = catchAsync(async (req, res, next) => {
       .limit(limit);
 
     // Send the search results as JSON to the client
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: searchResults.length,
       data: {
@@ -81,6 +81,6 @@ exports.getAllSearchResults = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error searching products:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });

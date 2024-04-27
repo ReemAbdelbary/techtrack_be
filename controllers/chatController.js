@@ -25,7 +25,7 @@ exports.chatBot = (req, res, next) => {
     )
     .then(
       (response) => {
-        res.status(200).json({
+        return res.status(200).json({
           status: "success",
           response: response["data"]["choices"][0]["message"],
         });

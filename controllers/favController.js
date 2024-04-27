@@ -12,12 +12,12 @@ exports.addToFav_logged = catchAsync(async (req, res, next) => {
       new: true,
       runValidator: true,
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
     });
   } catch (err) {
     console.error("Error adding product to favorites:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -27,7 +27,7 @@ exports.getMyFavorites = catchAsync(async (req, res, next) => {
     const favorites_products = await Product.find({
       _id: { $in: req.user.Favorites },
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: favorites_products.length,
       data: {
@@ -36,7 +36,7 @@ exports.getMyFavorites = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error("Error adding product to favorites:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -50,12 +50,12 @@ exports.RemoveFromFav_logged = catchAsync(async (req, res, next) => {
       new: true,
       runValidator: true,
     });
-    res.status(204).json({
+    return res.status(204).json({
       status: "success",
       data: null,
     });
   } catch (err) {
     console.error("Error deleting product from favorites:", err);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });

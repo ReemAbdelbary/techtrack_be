@@ -17,7 +17,7 @@ exports.searchHistory = async (req, res, next) => {
         _id: { $in: response.data.results },
       });
       console.log(response.data);
-      res.status(200).json({
+      return res.status(200).json({
         status: "success",
         results_size: products.length,
         products: products,
