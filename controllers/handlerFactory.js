@@ -77,10 +77,13 @@ exports.getAll = (Model) =>
       .paginate();
     const doc = await features.query;
 
+    const totalCount = await features.getTotalCount();
+
     // SEND RESPONSE
     return res.status(200).json({
       status: "success",
-      results: doc.length,
+      total: totalCount,
+      results_page: doc.length,
       data: {
         data: doc,
       },

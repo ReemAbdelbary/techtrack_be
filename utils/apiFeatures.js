@@ -44,6 +44,11 @@ class APIFeatures {
     this.query = this.query.skip(skip).limit(limit);
     return this;
   }
+
+  async getTotalCount() {
+    const count = await this.query.model.countDocuments(this.query._conditions);
+    return count;
+  }
 }
 
 module.exports = APIFeatures;
