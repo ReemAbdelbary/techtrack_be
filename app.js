@@ -49,18 +49,18 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      "category",
-      "price",
-      "site",
-      "Rate_Avg",
-      "Rate_Qty",
-      "Accessories_type",
-    ],
-  })
-);
+// app.use(
+//   hpp({
+//     whitelist: [
+//       "category",
+//       "price",
+//       "site",
+//       "Rate_Avg",
+//       "Rate_Qty",
+//       "Accessories_type",
+//     ],
+//   })
+// );
 
 app.use(morgan("dev")); //GET /api/v1/tours 200 146.553 ms - 1065
 
