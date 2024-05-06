@@ -35,6 +35,12 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
     });
 
     ////////////////////
+
+    // Count the total number of documents matching the search criteria
+    const totalResults = await Product.countDocuments({
+      name: { $regex: searchTerm, $options: "i" },
+    });
+
     // Perform the search logic using your Mongoose model
     const searchResults = await Product.find({
       name: { $regex: searchTerm, $options: "i" },
@@ -46,7 +52,8 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
     // Send the search results as JSON to the client
     return res.status(200).json({
       status: "success",
-      results: searchResults.length,
+      total: totalResults,
+      results_page: searchResults.length,
       data: {
         searchResults,
       },
