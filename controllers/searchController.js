@@ -13,6 +13,26 @@ function addToBeginning(arr, element) {
   }
 }
 
+// Define the filter function
+function filter(queryString, query) {
+  const searchTerm = queryString.q;
+  const page = queryString.page || 1;
+  const limit = queryString.limit || 100;
+
+  const queryObj = { ...queryString };
+  const excluded = ["page", "limit", "sort", "fields", "q"];
+  excluded.forEach((el) => delete queryObj[el]);
+
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
+  query.find(JSON.parse(queryStr));
+
+  if (searchTerm) {
+    query.find({ name: { $regex: searchTerm, $options: "i" } });
+  }
+
+  return query;
+}
 exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
   const searchTerm = req.query.q;
   const page = req.query.page || 1; // Get the page number from the request query or default to 1
@@ -34,20 +54,18 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
       runValidator: true,
     });
 
-    ////////////////////
+    // Apply filtering
+    const filteredQuery = filter(req.query, Product.find()).sort({ price: 1 });
 
-    // Count the total number of documents matching the search criteria
-    const totalResults = await Product.countDocuments({
-      name: { $regex: searchTerm, $options: "i" },
-    });
+    // Count the total number of documents matching the filtered criteria
+    const totalResults = await Product.countDocuments(filteredQuery);
 
-    // Perform the search logic using your Mongoose model
-    const searchResults = await Product.find({
-      name: { $regex: searchTerm, $options: "i" },
-    })
+    // Perform the search with pagination
+    const searchResults = await filteredQuery
       .sort({ price: 1 })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .select({ name: 1, price: 1, image_src: 1, site: 1, Rate_Avg: 1 });
 
     // Send the search results as JSON to the client
     return res.status(200).json({
@@ -70,18 +88,18 @@ exports.getAllSearchResults = catchAsync(async (req, res, next) => {
   const limit = req.query.limit || 100; // Get the limit from the request query or default to 10
 
   try {
-    // Count the total number of documents matching the search criteria
-    const totalResults = await Product.countDocuments({
-      name: { $regex: searchTerm, $options: "i" },
-    });
+    // Apply filtering
+    const filteredQuery = filter(req.query, Product.find()).sort({ price: 1 });
 
-    // Perform the search logic using your Mongoose model
-    const searchResults = await Product.find({
-      name: { $regex: searchTerm, $options: "i" },
-    })
+    // Count the total number of documents matching the filtered criteria
+    const totalResults = await Product.countDocuments(filteredQuery);
+
+    // Perform the search with pagination
+    const searchResults = await filteredQuery
       .sort({ price: 1 })
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .select({ name: 1, price: 1, image_src: 1, site: 1, Rate_Avg: 1 });
 
     // Send the search results as JSON to the client
     return res.status(200).json({
