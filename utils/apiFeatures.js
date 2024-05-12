@@ -13,7 +13,19 @@ class APIFeatures {
     // 1B) advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
-    this.query.find(JSON.parse(queryStr));
+    // this.query.find(JSON.parse(queryStr));
+
+    queryStr = JSON.parse(queryStr); //Convert the string to a JSON object
+
+    console.log(queryStr);
+    Object.keys(queryStr).forEach((key) => {
+      if (isNaN(queryStr[key]) && typeof queryStr[key] !== "object") {
+        console.log(queryStr[key]);
+        queryStr[key] = { $regex: new RegExp(queryStr[key], "i") };
+      }
+    });
+
+    this.query = this.query.find(queryStr);
 
     return this;
   }
