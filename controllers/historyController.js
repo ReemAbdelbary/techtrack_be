@@ -3,7 +3,7 @@ const Product = require("../models/productModel");
 const User = require("../models/UserModel");
 const Cfrecom = require("../models/CFrecomModel");
 
-exports.searchHistory = async (req, res, next) => {
+exports.user_rec = async (req, res, next) => {
   const user = await User.findById(req.user.id);
   // console.log(user.searchHistory);
   //check CF_recom for current user

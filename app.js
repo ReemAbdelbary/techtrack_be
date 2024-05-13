@@ -72,18 +72,8 @@ app.use("/api/v1/searchlogged", searchLogged);
 app.use("/api/v1/Myreviews", reviewUserRouter);
 app.use("/api/v1/favorites", favoritesRouter);
 app.use("/api/v1/chatbot", chatRouter);
-app.use("/api/v1/recs", recRouter);
-app.use("/api/v1/search-Rec", historyRouter);
-// app.get("/api/v1/laptops", homeController.getallLaptops);
-// app.get("/api/v1/mobiles", homeController.getallMobiles);
-// app.get("/api/v1/acccessories", homeController.getallAcces);
-// app.get("/api/v1/Raya", homeController.getallRaya);
-// app.get("/api/v1/Noon", homeController.getallNoon);
-// app.get("/api/v1/Amazon", homeController.getallAmazon);
-// app.get("/api/v1/KimoStore", homeController.getallKimo);
-// app.get("/api/v1/BTECH", homeController.getallBtech);
-// app.get("/api/v1/2b", homeController.getallTwoB);
-// app.get("/api/v1/Dream2000", homeController.getallDream);
+app.use("/api/v1/recs", recRouter); // product rec
+app.use("/api/v1/user-Rec", historyRouter); // user recomend (review + search)
 app.get("/api/v1/top-rated", homeController.getTopRated);
 
 app.all("*", (req, res, next) => {

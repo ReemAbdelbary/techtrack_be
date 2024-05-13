@@ -7,6 +7,6 @@ const authController = require("../controllers/authController");
 //routers
 router
   .route("/")
-  .get(authController.getCurrentUser, historyController.searchHistory);
+  .get(authController.getCurrentUser, historyController.user_rec);
 
 module.exports = router;
