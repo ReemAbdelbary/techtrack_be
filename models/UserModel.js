@@ -67,6 +67,16 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  Gender: {
+    type: String,
+    enum: ["male", "female"],
+  },
+  Phone: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^\d{10}$/, "Please fill a valid 10-digit phone number"],
+  },
 });
 
 userSchema.pre("save", async function (next) {
