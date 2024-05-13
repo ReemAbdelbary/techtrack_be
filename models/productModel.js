@@ -21,18 +21,15 @@ const productSchema = new mongoose.Schema(
       type: Number,
     },
     display_size: {
-      type: String,
+      type: Number,
     },
     ram: {
-      type: String,
+      type: Number,
     },
     HDD: {
       type: String,
     },
     processor: {
-      type: String,
-    },
-    internal_memory: {
       type: String,
     },
     graphics_card: {
@@ -65,16 +62,16 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
     internal_memory: {
-      type: String,
+      type: Number,
     },
     battery: {
-      type: String,
+      type: Number,
     },
     prim_cam: {
-      type: String,
+      type: Number,
     },
     second_cam: {
-      type: String,
+      type: Number,
     },
     SIM_count: {
       type: String,
@@ -86,9 +83,6 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
     Accessories_features: {
-      type: String,
-    },
-    product_match: {
       type: String,
     },
   },
