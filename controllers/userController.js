@@ -62,3 +62,21 @@ exports.getuser = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.make_admin = catchAsync(async (req, res, next) => {
+  const update = { role: "admin" };
+  const doc = await User.findByIdAndUpdate(req.params.id, update, {
+    new: true,
+    runValidator: true,
+  });
+
+  if (!doc) {
+    return next(new AppError("NO Document found with this id", 404));
+  }
+  return res.status(200).json({
+    status: "success",
+    data: {
+      data: doc,
+    },
+  });
+});

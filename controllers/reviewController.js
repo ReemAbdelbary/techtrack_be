@@ -11,8 +11,75 @@ exports.setProductUserIds = (req, res, next) => {
 };
 
 exports.createReview = factory.createOne(Review);
-exports.deleteReview = factory.deleteOne(Review);
-exports.updateReview = factory.updateOne(Review);
+
+exports.deleteReview = catchAsync(async (req, res, next) => {
+  const userlog = req.user;
+  // console.log(userlog.role);
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return next(new AppError("NO Document found with this id", 404));
+  }
+
+  if (userlog.role == "admin") {
+    const doc = await Review.findByIdAndDelete(req.params.id);
+
+    if (!doc) {
+      return next(new AppError("NO Document found with this id", 404));
+    }
+
+    return res.status(204).json({
+      status: "success",
+      data: null,
+    });
+  } else {
+    // console.log(userlog.id);
+    // console.log(review.user._id);
+    if (userlog.id == review.user._id) {
+      const doc = await Review.findByIdAndDelete(req.params.id);
+
+      if (!doc) {
+        return next(new AppError("NO Document found with this id", 404));
+      }
+
+      return res.status(204).json({
+        status: "success",
+        data: null,
+      });
+    } else {
+      return next(new AppError("User can't delete other users reviews", 401));
+    }
+  }
+});
+
+exports.updateReview = catchAsync(async (req, res, next) => {
+  const userlog = req.user;
+  // console.log(userlog.role);
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return next(new AppError("NO Document found with this id", 404));
+  }
+  if (userlog.id == review.user._id) {
+    const doc = await Review.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidator: true,
+    });
+
+    if (!doc) {
+      return next(new AppError("NO Document found with this id", 404));
+    }
+    return res.status(200).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  } else {
+    return next(new AppError("User can't update other users reviews", 401));
+  }
+});
+
 exports.getReview = factory.getOne(Review);
 exports.getAllReviews = factory.getAll(Review);
 

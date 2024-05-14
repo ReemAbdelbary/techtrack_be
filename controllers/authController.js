@@ -69,6 +69,7 @@ exports.login = catchAsync(async (req, res, next) => {
   return res.status(200).json({
     status: "success",
     token,
+    role: user.role,
   });
 });
 
@@ -87,7 +88,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError("you are not logged in, please log in to get access ", 401)
     );
   }
-  console.log(token);
+  // console.log(token);
 
   //2) verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //return user of this token

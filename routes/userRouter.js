@@ -23,6 +23,19 @@ router
 
 router.get("/me", authController.getCurrentUser, userController.getuser);
 
-//router.route("/").get(userController.getallusers) //restrict the view for auth users only
+router.patch(
+  "/makeAdmin/:id",
+  authController.protect,
+  authController.restrictTo("admin"),
+  userController.make_admin
+);
+
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.getallusers
+  ); //restrict the view for admins only
 
 module.exports = router;

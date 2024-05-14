@@ -19,13 +19,11 @@ router
 
 router
   .route("/:id")
-  .delete(
-    authController.restrictTo("admin", "user"),
-    reviewController.deleteReview
-  )
+  .delete(authController.protect, reviewController.deleteReview) //by user for user review and for admin for any
   .patch(
-    authController.restrictTo("admin", "user"),
+    authController.protect,
+    authController.restrictTo("user"),
     reviewController.updateReview
-  );
+  ); // update is for users only
 
 module.exports = router;
