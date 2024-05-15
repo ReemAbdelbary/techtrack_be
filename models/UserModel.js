@@ -69,15 +69,18 @@ const userSchema = new mongoose.Schema({
   },
   Gender: {
     type: String,
+    required: [true, "please provide your gender"],
     enum: ["male", "female"],
   },
   phone: {
     type: String,
-    required: true,
+    required: [true, "please provide your phone number"],
     unique: true,
     match: [/^\d{10}$/, "Please fill a valid 10-digit phone number"],
   },
 });
+
+userSchema.index({ phone: 1 }, { unique: true });
 
 userSchema.pre("save", async function (next) {
   //only run if password is modified
