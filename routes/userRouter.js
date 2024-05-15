@@ -11,7 +11,6 @@ router
 
 //router.delete("/deleteMe", authController.protect, userController.deleteMe);
 
-//reset password needs update!!!!! (replace the token)
 router
   .post("/forgotPassword", authController.forgotPassword)
   .patch("/resetPassword/:token", authController.resetPassword)

@@ -42,7 +42,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
     Gender: req.body.gender,
-    Phone: req.body.phone,
+    phone: req.body.phone,
   });
   const message = `<a>Welcome to Tech-Track, we're glad to have you 🎉🙏</a>`;
 
