@@ -23,14 +23,25 @@ function filter(queryString, query) {
   const excluded = ["page", "limit", "sort", "fields", "q"];
   excluded.forEach((el) => delete queryObj[el]);
 
+  // 1B) advanced filtering
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
-  query.find(JSON.parse(queryStr));
+  // this.query.find(JSON.parse(queryStr));
+
+  queryStr = JSON.parse(queryStr); //Convert the string to a JSON object
+
+  console.log(queryStr);
+  Object.keys(queryStr).forEach((key) => {
+    if (isNaN(queryStr[key]) && typeof queryStr[key] !== "object") {
+      console.log(queryStr[key]);
+      queryStr[key] = { $regex: new RegExp(queryStr[key], "i") };
+    }
+  });
 
   if (searchTerm) {
-    query.find({ name: { $regex: searchTerm, $options: "i" } });
+    queryStr.name = { $regex: searchTerm, $options: "i" };
   }
-
+  query.find(queryStr);
   return query;
 }
 exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
