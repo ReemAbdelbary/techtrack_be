@@ -5,9 +5,23 @@ const favorites = require("../controllers/favController");
 
 router
   .route("/:id")
-  .post(authController.protect, favorites.addToFav_logged)
-  .delete(authController.protect, favorites.RemoveFromFav_logged);
+  .post(
+    authController.protect,
+    authController.restrictTo("user"),
+    favorites.addToFav_logged
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo("user"),
+    favorites.RemoveFromFav_logged
+  );
 
-router.route("/").get(authController.protect, favorites.getMyFavorites);
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo("user"),
+    favorites.getMyFavorites
+  );
 
 module.exports = router;

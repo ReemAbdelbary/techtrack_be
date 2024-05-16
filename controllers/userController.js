@@ -80,3 +80,28 @@ exports.make_admin = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.disable_admin = catchAsync(async (req, res, next) => {
+  let current = await User.findById(req.params.id);
+  if (current.role == "superAdmin") {
+    return next(
+      new AppError("you do not have permission to do this action", 403)
+    );
+  } else {
+    const update = { role: "user" };
+    const doc = await User.findByIdAndUpdate(req.params.id, update, {
+      new: true,
+      runValidator: true,
+    });
+
+    if (!doc) {
+      return next(new AppError("NO Document found with this id", 404));
+    }
+    return res.status(200).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  }
+});

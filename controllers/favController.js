@@ -1,12 +1,16 @@
 const User = require("../models/UserModel");
 const Product = require("../models/productModel");
 const catchAsync = require("../utils/catchAsync");
+const mongoose = require("mongoose");
 
 exports.addToFav_logged = catchAsync(async (req, res, next) => {
   const productId = req.params.id;
   console.log(req.user);
   console.log(productId);
   try {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res.status(400).send({ error: "Invalid product ID" });
+    }
     req.user.Favorites.push(productId);
     await User.findByIdAndUpdate(req.user.id, req.user, {
       new: true,
@@ -42,9 +46,10 @@ exports.getMyFavorites = catchAsync(async (req, res, next) => {
 
 exports.RemoveFromFav_logged = catchAsync(async (req, res, next) => {
   const productId = req.params.id;
-  //   console.log(req.user);
-  //   console.log(productId);
   try {
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res.status(400).send({ error: "Invalid product ID" });
+    }
     req.user.Favorites.pull(productId);
     await User.findByIdAndUpdate(req.user.id, req.user, {
       new: true,

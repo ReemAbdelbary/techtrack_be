@@ -21,7 +21,7 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
     return next(new AppError("NO Document found with this id", 404));
   }
 
-  if (userlog.role == "admin") {
+  if (userlog.role == "admin" || userlog.role == "superAdmin") {
     const doc = await Review.findByIdAndDelete(req.params.id);
 
     if (!doc) {
