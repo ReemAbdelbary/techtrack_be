@@ -10,6 +10,9 @@ process.on("uncaughtException", (err) => {
 let port;
 const app = require("./app");
 
+// to schedule the RC
+//require("./scheduledTask");
+
 dotenv.config({ path: "./config.env" });
 
 const DB = process.env.DATABASE.replace(

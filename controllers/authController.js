@@ -118,7 +118,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
-    //roles now contains [admin , user]
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError("you do not have permission to do this action", 403)
@@ -225,10 +224,3 @@ exports.getCurrentUser = catchAsync(async (req, res, next) => {
   req.user = currentUser; // as we are in middleware so this will be available next in req info
   next();
 });
-
-//foe sign up : name
-// gender
-// country
-// email
-// password
-// confirm password
