@@ -11,6 +11,9 @@ exports.addToFav_logged = catchAsync(async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       return res.status(400).send({ error: "Invalid product ID" });
     }
+    if (req.user.Favorites.includes(productId)) {
+      return res.status(400).json({ error: "Product is already in favorites" });
+    }
     req.user.Favorites.push(productId);
     await User.findByIdAndUpdate(req.user.id, req.user, {
       new: true,
@@ -49,6 +52,11 @@ exports.RemoveFromFav_logged = catchAsync(async (req, res, next) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
       return res.status(400).send({ error: "Invalid product ID" });
+    }
+    if (!req.user.Favorites.includes(productId)) {
+      return res
+        .status(400)
+        .json({ error: "Product to be deleted is not in the favorites" });
     }
     req.user.Favorites.pull(productId);
     await User.findByIdAndUpdate(req.user.id, req.user, {
