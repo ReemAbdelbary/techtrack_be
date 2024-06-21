@@ -60,6 +60,15 @@ exports.updateReview = catchAsync(async (req, res, next) => {
   if (!review) {
     return next(new AppError("NO Document found with this id", 404));
   }
+  if (
+    req.body.rating === "" ||
+    req.body.rating === null ||
+    req.body.rating === undefined
+  ) {
+    return next(
+      new AppError("Rating is required and cannot be empty or null", 400)
+    );
+  }
   if (userlog.id == review.user._id) {
     const doc = await Review.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
