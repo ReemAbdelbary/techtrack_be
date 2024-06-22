@@ -11,7 +11,7 @@ let port;
 const app = require("./app");
 
 // to schedule the RC
-//require("./scheduledTask");
+require("./scheduledTask");
 
 dotenv.config({ path: "./config.env" });
 

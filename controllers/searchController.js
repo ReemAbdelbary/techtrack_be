@@ -76,7 +76,15 @@ exports.getAllSearchResults_logged = catchAsync(async (req, res, next) => {
       .sort({ price: 1 })
       .skip((page - 1) * limit)
       .limit(limit)
-      .select({ name: 1, price: 1, image_src: 1, site: 1, Rate_Avg: 1 });
+      .select({
+        name: 1,
+        price: 1,
+        image_src: 1,
+        site: 1,
+        Rate_Avg: 1,
+        Accessories_type: 1,
+        category: 1,
+      });
 
     // Send the search results as JSON to the client
     return res.status(200).json({
