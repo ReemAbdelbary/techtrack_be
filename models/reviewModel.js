@@ -42,7 +42,7 @@ reviewSchema.pre(/^find/, function (next) {
     select: "name photo",
   }).populate({
     path: "product",
-    select: "name image_src",
+    select: "name image_src category Accessories_type",
   });
   next();
 });
