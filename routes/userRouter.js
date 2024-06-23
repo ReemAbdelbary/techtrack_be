@@ -20,7 +20,8 @@ router
     authController.updatePassword
   );
 
-router.get("/me", authController.getCurrentUser, userController.getuser);
+//router.get("/me", authController.getCurrentUser, userController.getuser);
+router.get("/me", authController.protect, userController.getuser);
 
 router.patch(
   "/makeAdmin/:id",
