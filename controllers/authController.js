@@ -138,7 +138,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   //3)send it to user email
-  const resetURL = `https://master-techtrack21.netlify.app/reset?token=${resetToken}`;
+  const resetURL = `https://tech-track.netlify.app/reset?token=${resetToken}`;
 
   try {
     const message = `forgot your password? submit patch request with new password and password confirm to:${resetURL}.\n
